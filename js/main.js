@@ -16,6 +16,7 @@ searchInputEl.addEventListener('blur', function () {
 });
 
 
+
 const badgeEl = document.querySelector('header .badges');
 
 window.addEventListener('scroll', _.throttle(function () {
@@ -37,3 +38,14 @@ window.addEventListener('scroll', _.throttle(function () {
   }
 }, 300));
 // _.throttle(익명함수, 시간)
+
+
+
+const fadeEls = document.querySelectorAll('.visual .fade-in');
+
+fadeEls.forEach(function (fadeEl, index) {
+  gsap.to(fadeEl, 1, {
+    delay: (index + 1) * .7,
+    opacity: 1
+  });
+})
