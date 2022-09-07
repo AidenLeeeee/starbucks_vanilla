@@ -18,14 +18,21 @@ searchInputEl.addEventListener('blur', function () {
 
 
 const badgeEl = document.querySelector('header .badges');
+const toTopEl = document.querySelector('#to-top');
+
+toTopEl.classList.add('hide');
 
 window.addEventListener('scroll', _.throttle(function () {
-  console.log(window.scrollY);
   if (window.scrollY > 500) {
     // Hide Badge Element
+    toTopEl.classList.remove('hide');
     gsap.to(badgeEl, .6, {
       opacity: 0,
       display: 'none'
+    });
+    // Show To-Top Button
+    gsap.to(toTopEl, .2, {
+      x: 0
     });
     // gsap.to(요소, 지속시간, 옵션);
   } else {
@@ -34,10 +41,22 @@ window.addEventListener('scroll', _.throttle(function () {
       opacity: 1,
       display: 'block'
     });
+    // Hide To-Top Button
+    gsap.to(toTopEl, .2, {
+      x: 100
+    });
     // gsap.to(요소, 지속시간, 옵션);
   }
 }, 300));
 // _.throttle(익명함수, 시간)
+
+
+
+toTopEl.addEventListener('click', function () {
+  gsap.to(window, .7, {
+    scrollTo: 0
+  });
+});
 
 
 
@@ -82,6 +101,19 @@ new Swiper('.promotion .swiper-container', {
 
 
 
+new Swiper('.awards .swiper-container', {
+  autoplay: true,
+  loop: true,
+  spaceBetween: 30,
+  slidesPerView: 5,
+  navigation: {
+    prevEl: '.awards .swiper-prev',
+    nextEl: '.awards .swiper-next'
+  }
+});
+
+
+
 const promotionEl = document.querySelector('.promotion');
 const promotionToggleBtn = document.querySelector('.notice-line .toggle-promotion');
 let isHidePromotion = false;
@@ -121,3 +153,21 @@ function floatingObject(selector, delay, size) {
 floatingObject('.floating1', 1, 15);
 floatingObject('.floating2', .5, 17);
 floatingObject('.floating3', 1.5, 20);
+
+
+
+const spyEls = document.querySelectorAll('section.scroll-spy');
+spyEls.forEach(function (spyEl) {
+  new ScrollMagic
+    .Scene({
+      triggerElement: spyEl,    // 보여짐 여부를 감시할 요소를 지정
+      triggerHook: .8,          // Viewport(0~1) 기준으로 trigger 수행할 위치 지정
+    })
+    .setClassToggle(spyEl, 'show')
+    .addTo(new ScrollMagic.Controller());
+});
+
+
+
+const thisYear = document.querySelector('.this-year');
+thisYear.textContent = new Date().getFullYear();  // 2022
